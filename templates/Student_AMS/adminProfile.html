@@ -1,0 +1,26 @@
+<!-- templates/admin_profile.html -->
+{% extends "./adminBase.html" %}
+
+{% block title %}Admin Profile - Student AMS{% endblock %}
+
+{% block content %}
+<main class="admin-profile-section py-5" style="margin-top:-10px;">
+  <div class="container">
+    <div class="admin-profile-card shadow">
+      <div class="admin-profile-icon">
+         <i class="fas fa-user-shield"></i>
+      </div>
+      <div class="admin-profile-info">
+        <h2 class="admin-profile-name">Athulya SS</h2>
+        <p class="admin-profile-role">Administrator</p>
+        <p class="admin-profile-email">athulya@example.com</p>
+        <!-- <button class="admin-profile-edit-btn">
+          <i class="fas fa-edit me-1"></i> Edit Profile
+        </button> -->
+      </div>
+    </div>
+  </div>
+  </main>
+
+
+{% endblock %}

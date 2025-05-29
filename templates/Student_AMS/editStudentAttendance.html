@@ -1,0 +1,180 @@
+{% extends './facultyBase.html' %}
+{% load static %}
+
+{% block title %}Edit Student Attendance{% endblock %}
+
+{% block content %}
+<main class="edit-main pt-5"  style="margin-top:-70px;">
+  <h1 class="text-center mb-4">Edit Student Attendance</h1>
+
+  <form id="editAttendanceForm" class="edit-form container">
+    <div class="edit-form-top row g-3 mb-4">
+      <div class="col-md-3">
+        <label for="studentName" class="form-label">Student Name:</label>
+        <input type="text" id="studentName" name="studentName" class="form-control" readonly />
+      </div>
+      <div class="col-md-3">
+        <label for="department" class="form-label">Department:</label>
+        <input type="text" id="department" name="department" class="form-control" readonly />
+      </div>
+      <div class="col-md-3">
+        <label for="rollNumber" class="form-label">Roll Number:</label>
+        <input type="text" id="rollNumber" name="rollNumber" class="form-control" readonly />
+      </div>
+      <div class="col-md-3">
+        <label for="monthSelect" class="form-label">Month:</label>
+        <select id="monthSelect" name="monthSelect" class="form-select"></select>
+      </div>
+    </div>
+
+    <div class="edit-attendance-table-container mb-4">
+      <table class="edit-attendance-table table table-bordered text-center">
+        <thead>
+          <tr id="daysHeader"></tr>
+        </thead>
+        <tbody id="attendanceBody"></tbody>
+      </table>
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary edit-submit-btn">Submit</button>
+    </div>
+  </form>
+</main>
+
+<script>
+  const studentsData = {
+    "Athulya SS": {
+      dept: "Computer Science",
+      roll: "CS101",
+      attendance: {
+        "January": Array(30).fill("Present"),
+        "February": Array(28).fill("Absent"),
+        "March": Array(31).fill("Holiday"),
+        "April": Array(30).fill("Present"),
+        "May": Array(31).fill("Absent"),
+        "June": Array(30).fill("Holiday"),
+        "July": Array(31).fill("Present"),
+        "August": Array(31).fill("Absent"),
+        "September": Array(30).fill("Holiday"),
+        "October": Array(31).fill("Present"),
+        "November": Array(30).fill("Absent"),
+        "December": Array(31).fill("Holiday")
+      }
+    },
+     "Riya Thomas": {
+      dept: "Computer Science",
+      roll: "CS102",
+      attendance: {
+        "January": Array(30).fill("Absent"),
+        "February": Array(28).fill("Absent"),
+        "March": Array(31).fill("Holiday"),
+        "April": Array(30).fill("Present"),
+        "May": Array(31).fill("Absent"),
+        "June": Array(30).fill("Holiday"),
+        "July": Array(31).fill("Present"),
+        "August": Array(31).fill("Absent"),
+        "September": Array(30).fill("Holiday"),
+        "October": Array(31).fill("Present"),
+        "November": Array(30).fill("Absent"),
+        "December": Array(31).fill("Holiday")
+      }
+    }
+    // Add more student data if needed
+  };
+
+  const attendanceOptions = ["Present", "Absent", "Holiday"];
+
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  function populateMonths() {
+    const monthSelect = document.getElementById("monthSelect");
+    const months = Object.keys(studentsData[studentName].attendance);
+    months.forEach(month => {
+      const option = document.createElement("option");
+      option.value = month;
+      option.textContent = month;
+      monthSelect.appendChild(option);
+    });
+  }
+
+  function createDaysHeader(daysCount) {
+    const headerRow = document.getElementById("daysHeader");
+    headerRow.innerHTML = "<th>Day</th>";
+    for (let day = 1; day <= daysCount; day++) {
+      const th = document.createElement("th");
+      th.textContent = day;
+      headerRow.appendChild(th);
+    }
+  }
+
+  function createAttendanceRow(month) {
+    const tbody = document.getElementById("attendanceBody");
+    tbody.innerHTML = "";
+
+    const attendanceArr = studentsData[studentName].attendance[month];
+    createDaysHeader(attendanceArr.length);
+
+    const tr = document.createElement("tr");
+    const firstCell = document.createElement("td");
+    firstCell.textContent = "Attendance";
+    tr.appendChild(firstCell);
+
+    attendanceArr.forEach((status, index) => {
+      const td = document.createElement("td");
+      const select = document.createElement("select");
+      select.classList.add("edit-attendance-select");
+
+      attendanceOptions.forEach(option => {
+        const opt = document.createElement("option");
+        opt.value = option;
+        opt.textContent = option;
+        if (option === status) {
+          opt.selected = true;
+        }
+        select.appendChild(opt);
+      });
+
+      td.appendChild(select);
+      tr.appendChild(td);
+    });
+
+    tbody.appendChild(tr);
+  }
+
+  function onMonthChange() {
+    const month = document.getElementById("monthSelect").value;
+    createAttendanceRow(month);
+  }
+
+  const studentName = getQueryParam("name") || "Athulya SS"; // default for demo
+  if (!(studentName in studentsData)) {
+    alert("Student data not found");
+    // Optionally redirect back or handle no data
+  } else {
+    document.getElementById("studentName").value = studentName;
+    document.getElementById("department").value = studentsData[studentName].dept;
+    document.getElementById("rollNumber").value = studentsData[studentName].roll;
+
+    populateMonths();
+    document.getElementById("monthSelect").addEventListener("change", onMonthChange);
+    document.getElementById("monthSelect").selectedIndex = 0;
+    onMonthChange();
+  }
+
+  document.getElementById("editAttendanceForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const month = document.getElementById("monthSelect").value;
+    const selects = document.querySelectorAll(".edit-attendance-select");
+    const updatedAttendance = Array.from(selects).map(sel => sel.value);
+
+    console.log(`Updated attendance for ${studentName} in ${month}:`, updatedAttendance);
+    alert("Attendance updated successfully!");
+  });
+
+
+</script>
+{% endblock %}

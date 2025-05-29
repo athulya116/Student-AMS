@@ -1,0 +1,100 @@
+{% extends "./adminBase.html" %}
+{% load static %}
+
+{% block title %}Manage Faculty - Admin{% endblock %}
+
+{% block content %}
+<div class="manage-faculty-container">
+
+  <h1 class="manage-faculty-title">Manage Faculty</h1>
+
+  <!-- Controls -->
+  <div class="manage-faculty-controls mb-3 d-flex justify-content-between align-items-center">
+    <a href="{% url 'adminAddFaculty' %}" class="btn btn-primary manage-faculty-add-btn">
+      <i class="fas fa-user-plus"></i> Add Faculty
+    </a>
+
+    <select class="manage-faculty-filter form-select w-auto">
+      <option selected>Filter by Department</option>
+      <option value="cs">Computer Science</option>
+      <option value="ph">Physics</option>
+      <option value="bio">Biology</option>
+      <option value="all">Show All</option>
+    </select>
+  </div>
+
+  <!-- Faculty Table -->
+  <div class="manage-faculty-table-container">
+    <table class="manage-faculty-table table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Department</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-department="cs">
+          <td>1</td>
+          <td>Dr. Anil Kumar</td>
+          <td>Computer Science</td>
+          <td>anilk@example.com</td>
+          <td>
+            <a href="{% url 'adminEditFaculty'  %}" class="btn btn-sm btn-warning manage-faculty-edit-btn">
+              <i class="fas fa-edit"></i> Edit
+            </a>
+            <button class="btn btn-sm btn-danger manage-faculty-delete-btn">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+          </td>
+        </tr>
+        <tr data-department="ph">
+          <td>2</td>
+          <td>Prof. Meera Nair</td>
+          <td>Physics</td>
+          <td>meeran@example.com</td>
+          <td>
+            <a href="{% url 'adminEditFaculty'  %}" class="btn btn-sm btn-warning manage-faculty-edit-btn">
+              <i class="fas fa-edit"></i> Edit
+            </a>
+            <button class="btn btn-sm btn-danger manage-faculty-delete-btn">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+          </td>
+        </tr>
+        <tr data-department="bio">
+          <td>3</td>
+          <td>Dr. Sanjay P</td>
+          <td>Biology</td>
+          <td>sanjayp@example.com</td>
+          <td>
+            <a href="{% url 'adminEditFaculty' %}" class="btn btn-sm btn-warning manage-faculty-edit-btn">
+              <i class="fas fa-edit"></i> Edit
+            </a>
+            <button class="btn btn-sm btn-danger manage-faculty-delete-btn">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+          </td>
+        </tr>
+        <tr data-department="cs">
+          <td>4</td>
+          <td>Prof. Latha M</td>
+          <td>Computer Science</td>
+          <td>latham@example.com</td>
+          <td>
+            <a href="{% url 'adminEditFaculty'  %}" class="btn btn-sm btn-warning manage-faculty-edit-btn">
+              <i class="fas fa-edit"></i> Edit
+            </a>
+            <button class="btn btn-sm btn-danger manage-faculty-delete-btn">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends './facultyBase.html' %}
+
+{% block title %}Faculty Dashboard - Edit Profile{% endblock %}
+
+{% block body_class %}faculty-dashboard-page{% endblock %}
+
+{% block active_page_edit_profile %}active{% endblock %}
+
+{% block content %}
+<main class="container flex-grow-1 pt-5 student-editprofile-content" style="margin-top: -20px; max-width: 700px;">
+  <div class="card shadow-sm p-4 border-0">
+    <h2 class="text-center mb-4 student-editprofile-heading">Edit Profile</h2>
+
+    <form id="editProfileForm" class="student-editprofile-form" method="post" action="{% url 'facultyEditProfile' %}">
+      {% csrf_token %}
+
+      <div class="mb-3 input-group">
+        <span class="input-group-text bg-white"><i class="fa fa-user"></i></span>
+        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter full name" required value="{{ form.fullName.value|default_if_none:'' }}" />
+      </div>
+
+      <div class="mb-3 input-group">
+        <span class="input-group-text bg-white"><i class="fa fa-envelope"></i></span>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required value="{{ form.email.value|default_if_none:'' }}" />
+      </div>
+
+      <div class="mb-3 input-group">
+        <span class="input-group-text bg-white"><i class="fa fa-phone"></i></span>
+        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter phone number" required value="{{ form.phone.value|default_if_none:'' }}" />
+      </div>
+
+      <div class="mb-3 input-group">
+        <span class="input-group-text bg-white"><i class="fa fa-building"></i></span>
+        <select class="form-select" id="department" name="department" required>
+          <option value="" disabled {% if not form.department.value %}selected{% endif %}>Select department</option>
+          <option value="Computer Science" {% if form.department.value == "Computer Science" %}selected{% endif %}>Computer Science</option>
+          <option value="Electronics" {% if form.department.value == "Electronics" %}selected{% endif %}>Electronics</option>
+          <option value="Mechanical" {% if form.department.value == "Mechanical" %}selected{% endif %}>Mechanical</option>
+          <option value="Civil" {% if form.department.value == "Civil" %}selected{% endif %}>Civil</option>
+        </select>
+      </div>
+
+      <div class="mb-3 input-group">
+        <span class="input-group-text bg-white"><i class="fa fa-id-badge"></i></span>
+        <input type="text" class="form-control" id="facultyId" name="facultyId" placeholder="Enter Faculty Id" required value="{{ form.facultyId.value|default_if_none:'' }}" />
+      </div>
+
+      <div class="mb-4 input-group">
+        <span class="input-group-text bg-white"><i class="fa fa-lock"></i></span>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter new password" required />
+      </div>
+
+      <button type="submit" class="btn w-100 student-editprofile-submit-btn">Save Changes</button>
+    </form>
+  </div>
+</main>
+{% endblock %}

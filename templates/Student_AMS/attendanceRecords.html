@@ -1,0 +1,100 @@
+{% extends "./adminBase.html" %}
+{% load static %}
+
+{% block title %}Student Attendance{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+{% endblock %}
+
+{% block content %}
+<main class="attendance-main" style="margin-top: -10px; background-color:#e8eae3;">
+  <h1 class="attendance-title">Student Attendance</h1>
+
+  <div class="attendance-month-selector">
+    <label for="attendance-month">Select Month: </label>
+    <select id="attendance-month" class="attendance-dropdown" onchange="updateAttendanceTable()">
+      <option value="january">January</option>
+      <option value="february">February</option>
+      <option value="march">March</option>
+    </select>
+
+    <label for="attendance-department" class="ms-3">Filter by Department: </label>
+    <select id="attendance-department" class="attendance-dropdown" onchange="updateAttendanceTable()">
+      <option value="all">All</option>
+      <option value="Computer Science">Computer Science</option>
+      <option value="Physics">Physics</option>
+      <option value="Biology">Biology</option>
+    </select>
+  </div>
+
+  <table class="attendance-table" id="attendance-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Days Present</th>
+        <th>Days Absent</th>
+        <th>Total Days</th>
+        <th>Attendance %</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- JS inserts rows -->
+    </tbody>
+  </table>
+</main>
+
+<script>
+   const attendanceData = {
+     january: [
+       { name: "Athulya SS", dept: "Computer Science", present: 22, absent: 2, total: 24 },
+       { name: "Riya Thomas", dept: "Physics", present: 20, absent: 4, total: 24 },
+       { name: "Anju Mathew", dept: "Computer Science", present: 23, absent: 1, total: 24 },
+       { name: "Sneha Raj", dept: "Biology", present: 21, absent: 3, total: 24 }
+     ],
+     february: [
+       { name: "Athulya SS", dept: "Computer Science", present: 19, absent: 1, total: 20 },
+       { name: "Riya Thomas", dept: "Physics", present: 18, absent: 2, total: 20 },
+       { name: "Anju Mathew", dept: "Computer Science", present: 20, absent: 0, total: 20 },
+       { name: "Sneha Raj", dept: "Biology", present: 17, absent: 3, total: 20 }
+     ],
+     march: [
+       { name: "Athulya SS", dept: "Computer Science", present: 24, absent: 0, total: 24 },
+       { name: "Riya Thomas", dept: "Physics", present: 22, absent: 2, total: 24 },
+       { name: "Anju Mathew", dept: "Computer Science", present: 21, absent: 3, total: 24 },
+       { name: "Sneha Raj", dept: "Biology", present: 20, absent: 4, total: 24 }
+     ]
+   }
+   function updateAttendanceTable() {
+     const month = document.getElementById("attendance-month").value;
+     const department = document.getElementById("attendance-department").value;
+     const data = attendanceData[month];
+     const tbody = document.querySelector("#attendance-table tbody");
+     tbody.innerHTML = ""
+     const filteredData = department === "all"
+       ? data
+       : data.filter(student => student.dept === department)
+     filteredData.forEach(student => {
+       const row = document.createElement("tr");
+       const percentage = ((student.present / student.total) * 100).toFixed(2);
+       row.innerHTML = `
+         <td>${student.name}</td>
+         <td>${student.dept}</td>
+         <td>${student.present}</td>
+         <td>${student.absent}</td>
+         <td>${student.total}</td>
+         <td>${percentage}%</td>
+         <td>
+           <button class="attendance-edit-btn" onclick="window.location.href='{% url 'adminEditStudentAttendance' %}?name=${encodeURIComponent(student.name)}'">Edit</button>
+         </td>
+       `;
+       tbody.appendChild(row);
+     });
+    }
+   
+   window.onload = updateAttendanceTable
+
+</script>
+{% endblock %}

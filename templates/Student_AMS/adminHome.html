@@ -1,0 +1,76 @@
+{% extends "./adminBase.html" %}
+{% load static %}
+
+{% block title %}Admin Dashboard - Student AMS{% endblock %}
+
+{% block content %}
+
+
+  <!-- Admin Dashboard Content -->
+  <main class="flex-grow-1 pt-5" style="margin-top:-50px; background-color:#e8eae3;">
+    <div class="container py-4">
+      <h2 class="mb-4 fw-bold text-center" style="color: var(--accent-red); text-shadow: 1px 1px 3px rgba(0,0,0,0.1);">
+        Welcome, Admin
+      </h2>
+      <p class="lead text-center mb-5">Manage system operations efficiently from your dashboard.</p>
+
+      <div class="row g-4">
+        <!-- Dashboard Cards -->
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-user-graduate fa-2x mb-2 text-primary"></i>
+              <h5 class="card-title">Manage Students</h5>
+              <p class="card-text">Add, update, or remove student records.</p>
+              <a href="{% url 'manageStudent' %}" class="btn btn-sm btn-custom">Go</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-chalkboard-teacher fa-2x mb-2 text-success"></i>
+              <h5 class="card-title">Manage Faculty</h5>
+              <p class="card-text">View and manage faculty data.</p>
+              <a href="{% url 'manageFaculty' %}" class="btn btn-sm btn-custom">Go</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-calendar-check fa-2x mb-2 text-warning"></i>
+              <h5 class="card-title">Attendance Records</h5>
+              <p class="card-text">View logs by student or department.</p>
+              <a href="{% url 'studentAttendance' %}" class="btn btn-sm btn-custom">Go</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 mt-3">
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-building fa-2x mb-2 text-info"></i>
+              <h5 class="card-title">Departments</h5>
+              <p class="card-text">Manage departments and categories.</p>
+              <a href="{% url 'adminDepartment' %}" class="btn btn-sm btn-custom">Go</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+              <i class="fas fa-user-cog fa-2x mb-2 text-secondary"></i>
+              <h5 class="card-title">Profile</h5>
+              <p class="card-text">Update your admin details.</p>
+              <a href="{% url 'adminProfile' %}" class="btn btn-sm btn-custom">Go</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+{% endblock %}

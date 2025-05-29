@@ -1,0 +1,34 @@
+{% extends "./studentBase.html" %}
+{% load static %}
+
+{% block title %}Mark Attendance{% endblock %}
+
+{% block content %}
+<main class="flex-grow-1 d-flex align-items-center justify-content-center student-main-content" style="margin-top:-50px;">
+  <div class="student-attendance-form text-center p-4 shadow-sm rounded">
+    <h2 class="mb-4">Mark Today's Attendance</h2>
+
+    <form method="post" action="{% url 'markAttendance' %}">
+      {% csrf_token %}
+      <div class="mb-3 text-start">
+        <label for="attendanceDate" class="form-label">Date</label>
+        <input type="date" class="form-control" id="attendanceDate" name="date"
+               value="{{ today_date }}">
+      </div>
+
+      <div class="mb-4 text-start">
+        <label for="attendanceStatus" class="form-label">Attendance Status</label>
+        <select class="form-select" id="attendanceStatus" name="status" required>
+          <option value="">-- Select Status --</option>
+          <option value="Present">Present</option>
+          <option value="Absent">Absent</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn dashboard-btn me-3">Submit Attendance</button>
+      <a href="{% url 'studentShowAttendance' %}" class="btn dashboard-btn">Show Attendance</a>
+    </form>
+  </div>
+</main>
+<br>
+{% endblock %}

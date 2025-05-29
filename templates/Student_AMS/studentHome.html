@@ -1,0 +1,27 @@
+{% extends './studentBase.html' %}
+{% load static %}
+
+{% block title %}Student Dashboard - Student AMS{% endblock %}
+
+{% block content %}
+<div class="row g-4"  style="margin-top: -75px; justify-content: center;">
+
+  <!-- Center Content -->
+  <section class="col-md-6 student-home-card p-4 shadow-sm rounded" style="background-color:#fff;">
+    <div class="text-center">
+      <img src="{% static 'images/studentAvatar.png' %}" alt="Student Avatar" class="student-avatar mb-3" />
+      <h2 style="color: var(--dark-text); font-weight: 700;">Welcome, Athulya SS!</h2>
+      <p class="dashboard-subtext" style="color: var(--dark-text); font-weight: 500;">Here's your dashboard overview</p>
+
+      <p style="color: var(--dark-text); font-weight: 600;"><strong>Department:</strong> Computer Science</p>
+      <p style="color: var(--dark-text); font-weight: 600;"><strong>Roll Number:</strong> CS2023001</p>
+
+      <div class="student-home-actions mt-4">
+        <a href="{% url 'markAttendance' %}" class="btn btn-accent me-3 px-4 py-2">✔ Mark Attendance</a>
+        <a href="{% url 'studentShowAttendance' %}" class="btn btn-outline px-4 py-2">📅 Show Attendance</a>
+      </div>
+    </div>
+  </section>
+  
+</div>
+{% endblock %}

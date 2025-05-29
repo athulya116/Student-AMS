@@ -1,0 +1,85 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}Login | Student AMS{% endblock %}
+
+
+{% block content %}
+<main class="d-flex flex-grow-1 justify-content-center align-items-center login-bg" style="min-height:55vh; margin-top: -20px;">
+  <div class="card shadow-lg rounded-4 login-container d-flex flex-row" style="max-width: 800px; width: 100%;">
+
+    <!-- Left Side: Image -->
+    <div class="login-icon-side d-none d-md-flex align-items-center justify-content-center p-4" style="flex: 1;">
+      <img src="{% static 'images/image5.png' %}" alt="Login Icon" class="login-img" style="max-width: 100%; max-height: 100%;">
+    </div>
+
+    <!-- Right Side: Login Form -->
+    <div class="login-form-side p-4" style="flex: 1;">
+      <h3 class="text-center fw-bold text-accent mb-3">Login</h3>
+
+      <div class="mb-3">
+        <label for="userType" class="form-label fw-semibold">Select Role</label>
+        <select id="userType" class="form-select">
+          <option selected disabled>Select user type</option>
+          <option value="student">Student</option>
+          <option value="faculty">Faculty</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      <form id="login-form"> 
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+        </div>
+
+        <button type="submit" class="btn btn-custom w-100">Login</button>
+      </form>
+
+      <div class="mt-3 text-center">
+        <small>Don't have an account? <a href="{% url 'signup' %}" class="text-accent text-decoration-none">Sign up</a></small>
+      </div>
+
+      <div class="mb-3 text-center">
+        <a href="{% url 'forgotPassword' %}" class="text-decoration-none text-accent" style="font-size: 0.9rem;">Forgot password?</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+<br>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const roleSelect = document.getElementById('userType');
+    const form = document.getElementById('login-form');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        return;
+      }
+
+      const userRole = roleSelect.value;
+
+      if (userRole === 'student') {
+        window.location.href = "{% url 'studentHome' %}";
+      } else if (userRole === 'faculty') {
+        window.location.href = "{% url 'facultyHome' %}";
+      } else if (userRole === 'admin') {
+        window.location.href = "{% url 'adminHome' %}";
+      } else {
+        alert('Please select a valid role');
+      }
+    });
+  });
+</script>
+{% endblock %}

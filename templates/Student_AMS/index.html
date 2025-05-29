@@ -1,0 +1,31 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block title %}Home - Student Attendance Management System{% endblock %}
+
+{% block content %}
+  <div class="container py-5" style="min-height: 85vh;">
+    <div class="row align-items-center">
+
+      <!-- Left Side Image -->
+      <div class="col-md-6 text-center mb-4 mb-md-0">
+        <img src="{% static 'images/landingCover2.png' %}" alt="Attendance Illustration"
+             class="img-fluid" style="max-height: 400px;" />
+      </div>
+
+      <!-- Right Side Content -->
+      <div class="col-md-6 text-center text-md-start">
+        <h1 class="mb-2 welcome-heading">Welcome to</h1>
+        <h2 class="fw-bold mb-3 system-title">Student Attendance Management System</h2>
+        <p class="lead mb-4">A simple and efficient way to manage student attendance.</p>
+        <a href="{% url 'login' %}" class="btn btn-custom me-2 mb-2">Login</a>
+        <a href="{% url 'signup' %}" class="btn btn-outline-custom mb-2">Signup</a>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

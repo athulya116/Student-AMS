@@ -1,0 +1,41 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block title %}Home - Student Attendance Management System{% endblock %}
+{% block content %}
+  <main class="flex-grow-1 py-5 container" id="departments-page" style="min-height:60vh;">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold text-accent">Our Departments</h2>
+      <p class="lead">Explore the departments available in our institution.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body text-center">
+            <i class="fas fa-laptop-code fa-2x text-accent mb-3"></i>
+            <h5 class="card-title fw-bold">Computer Science</h5>
+            <p class="card-text">Explore cutting-edge tech and software development.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body text-center">
+            <i class="fas fa-atom fa-2x text-accent mb-3"></i>
+            <h5 class="card-title fw-bold">Physics</h5>
+            <p class="card-text">Understand the laws of nature and the universe.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body text-center">
+            <i class="fas fa-dna fa-2x text-accent mb-3"></i>
+            <h5 class="card-title fw-bold">Biology</h5>
+            <p class="card-text">Study life, organisms, and ecosystems.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

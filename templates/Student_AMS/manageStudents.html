@@ -1,0 +1,127 @@
+{% extends "./adminBase.html" %}
+
+{% load static %}
+
+{% block title %}Manage Students - Admin{% endblock %}
+{% block content %}
+ <main class="manage-students-main" style="margin-top:-100px;">
+    <div class="manage-students-container">
+
+      <h1 class="manage-faculty-title">Manage Students</h1>
+
+      <!-- Controls -->
+      <div class="manage-students-controls">
+        <a href="{% url 'adminAddStudent' %}" class="manage-students-add-btn">
+          <i class="fas fa-user-plus"></i> Add Student
+        </a>
+
+        <select class="manage-students-filter">
+          <option selected>Filter by Department</option>
+          <option value="cs">Computer Science</option>
+          <option value="ph">Physics</option>
+          <option value="bio">Biology</option>
+          <option value="all">Show All</option>
+        </select>
+
+      </div>
+
+      <!-- Student Table -->
+      <div class="manage-students-table-container">
+        <table class="manage-students-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Department</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+  <tr data-department="cs">
+    <td>1</td>
+    <td>Arjun K</td>
+    <td>Computer Science</td>
+    <td>arjunk@example.com</td>
+    <td>
+      <a href="{% url 'adminEditStudent' %}" class="manage-students-edit-btn">
+        <i class="fas fa-edit"></i> Edit
+      </a>
+      <button class="manage-students-delete-btn">
+        <i class="fas fa-trash-alt"></i> Delete
+      </button>
+    </td>
+  </tr>
+  <tr data-department="ph">
+    <td>2</td>
+    <td>Divya R</td>
+    <td>Electronics</td>
+    <td>divyar@example.com</td>
+    <td>
+      <a href="{% url 'adminEditStudent' %}" class="manage-students-edit-btn">
+        <i class="fas fa-edit"></i> Edit
+      </a>
+      <button class="manage-students-delete-btn">
+        <i class="fas fa-trash-alt"></i> Delete
+      </button>
+    </td>
+  </tr>
+  <tr data-department="bio">
+    <td>3</td>
+    <td>Rahul M</td>
+    <td>Mechanical</td>
+    <td>rahulm@example.com</td>
+    <td>
+      <a href="{% url 'adminEditStudent' %}" class="manage-students-edit-btn">
+        <i class="fas fa-edit"></i> Edit
+      </a>
+      <button class="manage-students-delete-btn">
+        <i class="fas fa-trash-alt"></i> Delete
+      </button>
+    </td>
+  </tr>
+  <tr data-department="cs">
+    <td>4</td>
+    <td>Neha S</td>
+    <td>Computer Science</td>
+    <td>nehas@example.com</td>
+    <td>
+      <a href="{% url 'adminEditStudent' %}" class="manage-students-edit-btn">
+        <i class="fas fa-edit"></i> Edit
+      </a>
+      <button class="manage-students-delete-btn">
+        <i class="fas fa-trash-alt"></i> Delete
+      </button>
+    </td>
+  </tr>
+</tbody>
+
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+
+<script>
+   const filter = document.querySelector(".manage-students-filter");
+  const rows = document.querySelectorAll(".manage-students-table tbody tr");
+
+  filter.addEventListener("change", () => {
+    const selected = filter.value;
+
+    rows.forEach(row => {
+      const dept = row.getAttribute("data-department");
+      if (selected === "all" || selected === "Filter by Department") {
+        row.style.display = "";
+      } else if (dept === selected) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  });
+
+</script>
+{% endblock %}
+

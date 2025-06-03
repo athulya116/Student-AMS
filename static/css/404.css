@@ -1,0 +1,101 @@
+:root {
+    --light-bg: #e8eae3;
+    --dark-text: #373833;
+    --accent-red: #fa2742;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    background: var(--light-bg);
+    color: var(--dark-text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  h1 {
+    margin-bottom: 0.2em;
+  }
+  #selector {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  #selector p {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .animal-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  .animal-option {
+    cursor: pointer;
+    border: 3px solid transparent;
+    border-radius: 12px;
+    padding: 10px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: border-color 0.3s ease;
+    width: 80px;
+    height: 80px;
+  }
+  .animal-option:hover,
+  .animal-option.selected {
+    border-color: var(--accent-red);
+    box-shadow: 0 0 10px var(--accent-red);
+  }
+  .animal-option img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  #game-container {
+    position: relative;
+    width: 600px;
+    height: 150px;
+    background: white;
+    border: 2px solid var(--dark-text);
+    border-radius: 10px;
+    overflow: hidden;
+    display: none;
+  }
+  #game-canvas {
+    display: block;
+    background: var(--light-bg);
+  }
+  #score {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: var(--dark-text);
+  }
+  #buttons {
+    margin-top: 15px;
+    display: none;
+    gap: 20px;
+  }
+  button {
+    cursor: pointer;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1em;
+    color: white;
+    background: var(--accent-red);
+    box-shadow: 0 4px 8px rgba(250,39,66,0.6);
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #c71f2e;
+  }

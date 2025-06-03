@@ -32,13 +32,13 @@
 
       <div class="collapse navbar-collapse" id="adminNavbar">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link active" href="{% url 'adminHome' %}">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'manageStudent' %}">Manage Students</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'manageFaculty' %}">Manage Faculty</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'studentAttendance' %}">Attendance Records</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'adminDepartment' %}">Departments</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'adminProfile' %}">Profile</a></li>
-          <li class="nav-item"><a class="nav-link text-danger" href="{% url 'home' %}">Logout</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.path == '/appAdmin/adminHome/' %}active{% endif %} " href="{% url 'adminHome' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.path == '/appAdmin/manageStudent/' %}active{% endif %}" href="{% url 'manageStudent' %}">Manage Students</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.path == '/appAdmin/manageFaculty/' %}active{% endif %}" href="{% url 'manageFaculty' %}">Manage Faculty</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.path == '/appAdmin/studentAttendance/' %}active{% endif %}" href="{% url 'studentAttendance' %}">Attendance Records</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.path == '/appAdmin/adminDepartment/' %}active{% endif %}" href="{% url 'adminDepartment' %}">Departments</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.path == '/appAdmin/adminProfile/' %}active{% endif %}" href="{% url 'adminProfile' %}">Profile</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Logout</a></li>
         </ul>
       </div>
     </div>

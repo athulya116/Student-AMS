@@ -24,3 +24,5 @@ urlpatterns = [
     path('student/', include('student.urls')),
     path('faculty/', include('faculty.urls')),
 ]
+
+handler404 = 'core.views.custom_404_view'

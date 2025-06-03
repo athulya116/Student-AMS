@@ -23,3 +23,5 @@ def signup(request):
 def forgotPassword(request):
     return render(request, 'Student_AMS/forgotPassword.html')
 
+def custom_404_view(request, exception):
+    return render(request, 'Student_AMS/404.html', status=404)

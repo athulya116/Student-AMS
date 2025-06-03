@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 - Page Not Found</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 10px; /* Reduced padding to move content higher */
+      text-align: center;
+      overflow-x: hidden;
+    }
+    .error-container {
+      margin: 10px 0; /* Reduced margin to move content higher */
+      padding: 15px;
+      max-width: 800px;
+    }
+    .error-container h1 {
+      font-size: 120px;
+      font-weight: 700;
+      color: #490b3d;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .error-container p.oops {
+      font-size: 36px;
+      font-weight: 700;
+      color: #fa2742;
+      margin: 10px 0;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    .error-container .message {
+      font-size: 18px;
+      color: #333;
+      margin: 10px 0;
+      line-height: 1.5;
+    }
+    #game-container {
+      position: relative;
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      max-width: 740px;
+      width: 100%;
+      margin-bottom: 15px; /* Slightly reduced margin to align with higher content */
+    }
+    #game-canvas {
+      background: #fff;
+      border: 2px solid #490b3d;
+      border-radius: 10px;
+      display: block;
+      width: 100%;
+      max-width: 700px;
+    }
+    #score {
+      margin: 10px 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #490b3d;
+      text-align: center;
+    }
+    #buttons {
+      margin-top: 10px;
+      display: none;
+      justify-content: center;
+      gap: 15px;
+    }
+    #buttons button {
+      padding: 10px 25px;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #bd1e51;
+      color: white;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    #buttons button:hover {
+      background: #490b3d;
+      transform: translateY(-2px);
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    @media (max-width: 768px) {
+      .error-container h1 {
+        font-size: 80px;
+      }
+      .error-container p.oops {
+        font-size: 28px;
+      }
+      .error-container .message {
+        font-size: 16px;
+      }
+      #game-container {
+        padding: 15px;
+      }
+      #game-canvas {
+        width: 100%;
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="error-container">
+    <h1>404</h1>
+    <p class="oops">Oops!</p>
+    <p class="message">The page you are looking for in the Student Attendance Management System could not be found.</p>
+    <p class="message">While you're here, have fun with our bunny runner game! Press <strong>Space</strong> or <strong>↑</strong> to jump.</p>
+  </div>
+
+  <div id="game-container" role="main" aria-label="Runner Game">
+    <canvas id="game-canvas" width="700" height="200" aria-describedby="score"></canvas>
+    <div id="score" aria-live="polite" aria-atomic="true">Score: 0</div>
+    <div id="buttons">
+      <button id="play-again-btn">Play Again</button>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const canvas = document.getElementById('game-canvas');
+      const ctx = canvas.getContext('2d');
+      const gameContainer = document.getElementById('game-container');
+      const scoreEl = document.getElementById('score');
+      const buttons = document.getElementById('buttons');
+      const playAgainBtn = document.getElementById('play-again-btn');
+
+      const animalFrames = {
+        bunny: [
+          "https://i.postimg.cc/Fz3RdWcL/bunny1.png",
+          "https://i.postimg.cc/vmNnTXr3/bunny2.png",
+          "https://i.postimg.cc/bJYTpFG6/bunny-jump.png"
+        ]
+      };
+      const obstacleImgSrc = "https://i.postimg.cc/8P6R6T1m/obstacle.png";
+
+      let obstacleImg = new Image();
+      obstacleImg.src = obstacleImgSrc;
+
+      let runnerFrames = [];
+      let runnerJumpFrame = null;
+
+      const GRAVITY = 0.7;
+      const JUMP_SPEED = -12;
+      const GROUND_Y = 120;
+      const RUNNER_WIDTH = 44;
+      const RUNNER_HEIGHT = 47;
+      const OBSTACLE_WIDTH = 25;
+      const OBSTACLE_HEIGHT = 50;
+
+      let runner = {
+        x: 50,
+        y: GROUND_Y,
+        vy: 0,
+        jumping: false,
+        frameIndex: 0,
+        frameTick: 0
+      };
+      let obstacle = {
+        x: canvas.width,
+        y: GROUND_Y + RUNNER_HEIGHT - OBSTACLE_HEIGHT,
+        width: OBSTACLE_WIDTH,
+        height: OBSTACLE_HEIGHT
+      };
+      let score = 0;
+      let gameOver = false;
+      let animationId = null;
+
+      // Preload all images given an array of URLs, return array of Image objects
+      function preloadImages(urls) {
+        return Promise.all(
+          urls.map(url => new Promise((res, rej) => {
+            const img = new Image();
+            img.onload = () => res(img);
+            img.onerror = () => rej(new Error(`Failed to load image: ${url}`));
+            img.src = url;
+          }))
+        );
+      }
+
+      // Load runner frames for bunny
+      async function loadAnimalImages() {
+        const urls = animalFrames.bunny;
+        try {
+          const imgs = await preloadImages(urls);
+          runnerFrames = imgs.slice(0, 2); // running frames
+          runnerJumpFrame = imgs[2];       // jump frame
+        } catch (error) {
+          console.error(error);
+          alert("Failed to load runner images. Please try again.");
+        }
+      }
+
+      function clear() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      function drawGround() {
+        ctx.strokeStyle = 'rgba(55,56,51,0.3)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(0, GROUND_Y + RUNNER_HEIGHT);
+        ctx.lineTo(canvas.width, GROUND_Y + RUNNER_HEIGHT);
+        ctx.stroke();
+      }
+
+      function drawRunner() {
+        if (runner.jumping) {
+          ctx.drawImage(runnerJumpFrame, runner.x, runner.y, RUNNER_WIDTH, RUNNER_HEIGHT);
+        } else {
+          ctx.drawImage(runnerFrames[runner.frameIndex], runner.x, runner.y, RUNNER_WIDTH, RUNNER_HEIGHT);
+        }
+      }
+
+      function drawObstacle() {
+        ctx.drawImage(obstacleImg, obstacle.x, obstacle.y, OBSTACLE_WIDTH, OBSTACLE_HEIGHT);
+      }
+
+      function updateRunner() {
+        if (runner.jumping) {
+          runner.vy += GRAVITY;
+          runner.y += runner.vy;
+          if (runner.y >= GROUND_Y) {
+            runner.y = GROUND_Y;
+            runner.vy = 0;
+            runner.jumping = false;
+          }
+        } else {
+          runner.frameTick++;
+          if (runner.frameTick % 8 === 0) {
+            runner.frameIndex = (runner.frameIndex + 1) % runnerFrames.length;
+          }
+        }
+      }
+
+      function updateObstacle() {
+        obstacle.x -= 6;
+        if (obstacle.x < -OBSTACLE_WIDTH) {
+          obstacle.x = canvas.width + Math.floor(Math.random() * 200);
+          score++;
+          scoreEl.textContent = "Score: " + score;
+        }
+      }
+
+      function collisionDetected() {
+        const rLeft = runner.x;
+        const rRight = runner.x + RUNNER_WIDTH;
+        const rTop = runner.y;
+        const rBottom = runner.y + RUNNER_HEIGHT;
+
+        const oLeft = obstacle.x;
+        const oRight = obstacle.x + OBSTACLE_WIDTH;
+        const oTop = obstacle.y;
+        const oBottom = obstacle.y + OBSTACLE_HEIGHT;
+
+        return !(rRight < oLeft || rLeft > oRight || rBottom < oTop || rTop > oBottom);
+      }
+
+      function gameLoop() {
+        clear();
+        drawGround();
+        drawRunner();
+        drawObstacle();
+        updateRunner();
+        updateObstacle();
+
+        if (collisionDetected()) {
+          gameOver = true;
+          cancelAnimationFrame(animationId);
+          buttons.style.display = 'flex';
+          scoreEl.textContent = "Game Over! Score: " + score;
+          return;
+        }
+        animationId = requestAnimationFrame(gameLoop);
+      }
+
+      function jump() {
+        if (!runner.jumping) {
+          runner.jumping = true;
+          runner.vy = JUMP_SPEED;
+        }
+      }
+
+      // Initialize game
+      async function startGame() {
+        gameContainer.style.display = 'block';
+
+        // Load bunny images
+        await loadAnimalImages();
+
+        // Ensure obstacle image loaded
+        if (!obstacleImg.complete) {
+          await new Promise((res, rej) => {
+            obstacleImg.onload = res;
+            obstacleImg.onerror = () => rej(new Error("Failed to load obstacle image"));
+          });
+        }
+
+        // Reset game state
+        runner.x = 50;
+        runner.y = GROUND_Y;
+        runner.vy = 0;
+        runner.jumping = false;
+        runner.frameIndex = 0;
+        runner.frameTick = 0;
+
+        obstacle.x = canvas.width;
+        obstacle.y = GROUND_Y + RUNNER_HEIGHT - OBSTACLE_HEIGHT;
+        score = 0;
+        gameOver = false;
+        scoreEl.textContent = "Score: 0";
+        buttons.style.display = 'none';
+
+        animationId = requestAnimationFrame(gameLoop);
+      }
+
+      playAgainBtn.addEventListener('click', () => {
+        // Reset game state
+        runner.x = 50;
+        runner.y = GROUND_Y;
+        runner.vy = 0;
+        runner.jumping = false;
+        runner.frameIndex = 0;
+        runner.frameTick = 0;
+
+        obstacle.x = canvas.width;
+        obstacle.y = GROUND_Y + RUNNER_HEIGHT - OBSTACLE_HEIGHT;
+        score = 0;
+        gameOver = false;
+        scoreEl.textContent = "Score: 0";
+        buttons.style.display = 'none';
+
+        animationId = requestAnimationFrame(gameLoop);
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (
+          e.code === 'Space' || e.key === ' ' ||
+          e.code === 'ArrowUp' || e.key === 'ArrowUp'
+        ) {
+          e.preventDefault();
+          if (!gameOver && gameContainer.style.display === 'block') jump();
+        }
+      });
+
+      // Start the game immediately
+      startGame();
+    })();
+  </script>
+</body>
+</html>

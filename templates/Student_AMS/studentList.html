@@ -2,52 +2,94 @@
 
 {% load static %}
 
-{% block active_student_list %}active{% endblock %}
-
-{% block title %}Student List - Student AMS{% endblock %}
-
-{% block body_class %}student-list-page{% endblock %}
-
+{% block title %}Manage Students - Admin{% endblock %}
 {% block content %}
-<h2 class="text-center mb-4" style="color: var(--dark-text);">Student List</h2>
-<div class="table-responsive student-list-page" >
-  <div class="student-list-table-container">
-  <table class="table student-list-table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Roll No</th>
-        <th>Department</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Include the 20 student rows here exactly as I gave you above -->
-      <!-- Example row -->
-      <tr><td data-label="Name">Athulya SS</td><td data-label="Roll No">STU2023001</td><td data-label="Department">Computer Science</td><td data-label="Email">athulya@example.com</td><td data-label="Phone">9876543210</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a> <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Arjun Raj</td><td data-label="Roll No">STU2023002</td><td data-label="Department">Physics</td><td data-label="Email">arjun@example.com</td><td data-label="Phone">9876543211</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Neha Thomas</td><td data-label="Roll No">STU2023003</td><td data-label="Department">Biology</td><td data-label="Email">neha@example.com</td><td data-label="Phone">9876543212</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Hari Kumar</td><td data-label="Roll No">STU2023004</td><td data-label="Department">Computer Science</td><td data-label="Email">hari@example.com</td><td data-label="Phone">9876543213</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Anu Maria</td><td data-label="Roll No">STU2023005</td><td data-label="Department">Physics</td><td data-label="Email">anu@example.com</td><td data-label="Phone">9876543214</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Vivek Das</td><td data-label="Roll No">STU2023006</td><td data-label="Department">Biology</td><td data-label="Email">vivek@example.com</td><td data-label="Phone">9876543215</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Divya R</td><td data-label="Roll No">STU2023007</td><td data-label="Department">Computer Science</td><td data-label="Email">divya@example.com</td><td data-label="Phone">9876543216</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Rahul Nair</td><td data-label="Roll No">STU2023008</td><td data-label="Department">Physics</td><td data-label="Email">rahul@example.com</td><td data-label="Phone">9876543217</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Sneha S</td><td data-label="Roll No">STU2023009</td><td data-label="Department">Biology</td><td data-label="Email">sneha@example.com</td><td data-label="Phone">9876543218</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Manoj T</td><td data-label="Roll No">STU2023010</td><td data-label="Department">Computer Science</td><td data-label="Email">manoj@example.com</td><td data-label="Phone">9876543219</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Lakshmi V</td><td data-label="Roll No">STU2023011</td><td data-label="Department">Physics</td><td data-label="Email">lakshmi@example.com</td><td data-label="Phone">9876543220</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Ajith M</td><td data-label="Roll No">STU2023012</td><td data-label="Department">Biology</td><td data-label="Email">ajith@example.com</td><td data-label="Phone">9876543221</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Sandra P</td><td data-label="Roll No">STU2023013</td><td data-label="Department">Computer Science</td><td data-label="Email">sandra@example.com</td><td data-label="Phone">9876543222</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Joseph Mathew</td><td data-label="Roll No">STU2023014</td><td data-label="Department">Physics</td><td data-label="Email">joseph@example.com</td><td data-label="Phone">9876543223</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Kavya N</td><td data-label="Roll No">STU2023015</td><td data-label="Department">Biology</td><td data-label="Email">kavya@example.com</td><td data-label="Phone">9876543224</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Nandu R</td><td data-label="Roll No">STU2023016</td><td data-label="Department">Computer Science</td><td data-label="Email">nandu@example.com</td><td data-label="Phone">9876543225</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Reshma S</td><td data-label="Roll No">STU2023017</td><td data-label="Department">Physics</td><td data-label="Email">reshma@example.com</td><td data-label="Phone">9876543226</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Basil K</td><td data-label="Roll No">STU2023018</td><td data-label="Department">Biology</td><td data-label="Email">basil@example.com</td><td data-label="Phone">9876543227</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Megha M</td><td data-label="Roll No">STU2023019</td><td data-label="Department">Computer Science</td><td data-label="Email">megha@example.com</td><td data-label="Phone">9876543228</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-      <tr><td data-label="Name">Vishnu V</td><td data-label="Roll No">STU2023020</td><td data-label="Department">Physics</td><td data-label="Email">vishnu@example.com</td><td data-label="Phone">9876543229</td><td><a href="{% url 'facultyStudentProfileEdit' %}" class="btn btn-edit">Edit</a>  <button class="btn-delete">Delete</button></td></tr>
-    </tbody>
-  </table>
-  </div>
-</div>
+ <main class="manage-students-main" style="margin-top:-100px;">
+    <div class="manage-students-container">
+
+      <h1 class="manage-faculty-title">Student List</h1>
+
+      <!-- Controls -->
+      <div class="manage-students-controls">
+        <a href="{% url 'facultyAddStudent' %}" class="manage-students-add-btn">
+          <i class="fas fa-user-plus"></i> Add Student
+        </a>
+
+        <select class="manage-students-filter">
+          <option selected>Filter by Department</option>
+          <option value="cs">Computer Science</option>
+          <option value="ph">Physics</option>
+          <option value="bi">Biology</option>
+          <option value="all">Show All</option>
+        </select>
+
+      </div>
+
+      <!-- Student Table -->
+      <div class="manage-students-table-container">
+        <table class="manage-students-table">
+          <thead>
+            <tr>
+              <th>Admn No</th>
+              <th>Name</th>
+              <th>Department</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+  {% for student in students %}
+  <tr data-department="{% if 'computer' in student.department|lower %}cs{% elif 'physics' in student.department|lower %}ph{% elif 'bio' in student.department|lower %}bi{% endif %}">
+    <td>{{ student.admn_no }}</td>
+    <td>{{ student.full_name }}</td>
+    <td>{{ student.department }}</td>
+    <td>{{ student.user.email }}</td>
+    <td>
+      <a href="{% url 'facultyStudentProfileEdit' student.admn_no %}" class="manage-students-edit-btn">
+        <i class="fas fa-edit"></i> Edit
+      </a>
+      <form method="POST" action="{% url 'facultyDeleteStudent' student.admn_no %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="manage-students-delete-btn" onclick="return confirm('Are you sure you want to delete this student?');">
+          <i class="fas fa-trash-alt"></i> Delete
+        </button>
+      </form>
+    </td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan="5" class="text-center">No students found.</td>
+  </tr>
+  {% endfor %}
+</tbody>
+
+
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+
+<script>
+   const filter = document.querySelector(".manage-students-filter");
+  const rows = document.querySelectorAll(".manage-students-table tbody tr");
+
+  filter.addEventListener("change", () => {
+    const selected = filter.value;
+
+    rows.forEach(row => {
+      const dept = row.getAttribute("data-department");
+      if (selected === "all" || selected === "Filter by Department") {
+        row.style.display = "";
+      } else if (dept === selected) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  });
+
+</script>
 {% endblock %}
+

@@ -23,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-x*msq(@1mxololjoa@oyos(m6pf094v+rgs=!5nt^b=!x+u8)l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = True
 
 # ALLOWED_HOSTS = []
 
 
-DEBUG = False
+# DEBUG = False
 ALLOWED_HOSTS = ['*','localhost','127.0.0.1']
 
 
@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     'student',
     'faculty'
 ]
+
+AUTH_USER_MODEL = 'core.User'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -107,6 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
 
 
 # Internationalization

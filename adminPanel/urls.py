@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('home/',views.adminHome, name='adminHome'),
+    path('adminHome/',views.adminHome, name='adminHome'),
     path('addDepartment/',views.addDepartment, name='addDepartment'),
     path('adminDepartment/',views.adminDepartment, name='adminDepartment'),
     path('studentAttendance/',views.studentAttendance, name='studentAttendance'),
@@ -12,7 +12,11 @@ urlpatterns = [
     path('adminProfile/',views.adminProfile, name='adminProfile'),
     path('adminAddStudent/',views.adminAddStudent, name='adminAddStudent'),
     path('adminAddFaculty/',views.adminAddFaculty, name='adminAddFaculty'),
-    path('adminEditStudent/',views.adminEditStudent, name='adminEditStudent'),
-    path('adminEditFaculty/',views.adminEditFaculty, name='adminEditFaculty'),
+    path('adminStudentProfileEdit/<str:admn_no>/',views.adminEditStudent, name='adminStudentProfileEdit'),
+    path('adminStudentProfileDelete/<str:admn_no>/',views.adminDeleteStudent, name='adminDeleteStudent'),
+
+    path('adminEditFaculty/<str:faculty_id>/',views.adminEditFaculty, name='adminEditFaculty'),
+    path('adminDeleteFaculty/<str:faculty_id>/',views.adminDeleteFaculty, name='adminDeleteFaculty'),
+
     path('adminEditStudentAttendance/',views.adminEditStudentAttendance, name='adminEditStudentAttendance'),
 ]

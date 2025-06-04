@@ -6,4 +6,5 @@ urlpatterns = [
     path('studentShowAttendance/',views.studentShowAttendance, name='studentShowAttendance'),
     path('studentEditProfile/',views.studentEditProfile, name='studentEditProfile'),
     path('markAttendance/',views.markAttendance, name='markAttendance'),
+    path('logout/', views.logout_view, name='logout')
 ]

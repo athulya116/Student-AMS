@@ -19,7 +19,7 @@
           <option selected>Filter by Department</option>
           <option value="cs">Computer Science</option>
           <option value="ph">Physics</option>
-          <option value="bio">Biology</option>
+          <option value="bi">Biology</option>
           <option value="all">Show All</option>
         </select>
 
@@ -38,63 +38,31 @@
             </tr>
           </thead>
           <tbody>
-  <tr data-department="cs">
-    <td>1</td>
-    <td>Arjun K</td>
-    <td>Computer Science</td>
-    <td>arjunk@example.com</td>
+  {% for student in students %}
+  <tr data-department="{% if 'computer' in student.department|lower %}cs{% elif 'physics' in student.department|lower %}ph{% elif 'bio' in student.department|lower %}bi{% endif %}">
+    <td>{{ student.admn_no }}</td>
+    <td>{{ student.full_name }}</td>
+    <td>{{ student.department }}</td>
+    <td>{{ student.user.email }}</td>
     <td>
-      <a href="{% url 'adminEditStudent' %}" class="manage-students-edit-btn">
+      <a href="{% url 'adminStudentProfileEdit' student.admn_no %}" class="manage-students-edit-btn">
         <i class="fas fa-edit"></i> Edit
       </a>
-      <button class="manage-students-delete-btn">
-        <i class="fas fa-trash-alt"></i> Delete
-      </button>
+      <form method="POST" action="{% url 'adminDeleteStudent' student.admn_no %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="manage-students-delete-btn" onclick="return confirm('Are you sure you want to delete this student?');">
+          <i class="fas fa-trash-alt"></i> Delete
+        </button>
+      </form>
     </td>
   </tr>
-  <tr data-department="ph">
-    <td>2</td>
-    <td>Divya R</td>
-    <td>Electronics</td>
-    <td>divyar@example.com</td>
-    <td>
-      <a href="{% url 'adminEditStudent' %}" class="manage-students-edit-btn">
-        <i class="fas fa-edit"></i> Edit
-      </a>
-      <button class="manage-students-delete-btn">
-        <i class="fas fa-trash-alt"></i> Delete
-      </button>
-    </td>
+  {% empty %}
+  <tr>
+    <td colspan="5" class="text-center">No students found.</td>
   </tr>
-  <tr data-department="bio">
-    <td>3</td>
-    <td>Rahul M</td>
-    <td>Mechanical</td>
-    <td>rahulm@example.com</td>
-    <td>
-      <a href="{% url 'adminEditStudent' %}" class="manage-students-edit-btn">
-        <i class="fas fa-edit"></i> Edit
-      </a>
-      <button class="manage-students-delete-btn">
-        <i class="fas fa-trash-alt"></i> Delete
-      </button>
-    </td>
-  </tr>
-  <tr data-department="cs">
-    <td>4</td>
-    <td>Neha S</td>
-    <td>Computer Science</td>
-    <td>nehas@example.com</td>
-    <td>
-      <a href="{% url 'adminEditStudent' %}" class="manage-students-edit-btn">
-        <i class="fas fa-edit"></i> Edit
-      </a>
-      <button class="manage-students-delete-btn">
-        <i class="fas fa-trash-alt"></i> Delete
-      </button>
-    </td>
-  </tr>
+  {% endfor %}
 </tbody>
+
 
         </table>
       </div>

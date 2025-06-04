@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -145,12 +146,12 @@
 
       const animalFrames = {
         bunny: [
-          "https://i.postimg.cc/Fz3RdWcL/bunny1.png",
-          "https://i.postimg.cc/vmNnTXr3/bunny2.png",
-          "https://i.postimg.cc/bJYTpFG6/bunny-jump.png"
+          "{% static 'images/bunny_run1.png' %}",
+          "{% static 'images/bunny_run2.png' %}",
+          "{% static 'images/bunny_jump.png' %}"
         ]
       };
-      const obstacleImgSrc = "https://i.postimg.cc/8P6R6T1m/obstacle.png";
+      const obstacleImgSrc = "{% static 'images/obstacle3.jpg' %}";
 
       let obstacleImg = new Image();
       obstacleImg.src = obstacleImgSrc;

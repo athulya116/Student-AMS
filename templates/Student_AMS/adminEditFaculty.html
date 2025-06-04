@@ -1,62 +1,52 @@
 {% extends "./adminBase.html" %}
-{% load static %}
 
-{% block title %}Edit Faculty Profile - Admin Dashboard{% endblock %}
+{% block title %}Edit Profile - Faculty Dashboard{% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-{% endblock %}
+{% block body_class %}faculty-dashboard-page{% endblock %}
 
 {% block content %}
-<main class="container flex-grow-1 pt-5 student-editprofile-content" style="margin-top: 50px; max-width: 700px; background-color:#e8eae3;">
+<main class="container flex-grow-1 pt-5 student-editprofile-content" style="margin-top:-30px; max-width: 700px;">
   <div class="card shadow-sm p-4 border-0">
     <h2 class="text-center mb-4 student-editprofile-heading">Edit Faculty Profile</h2>
 
-    <form id="editProfileForm" class="student-editprofile-form" method="post" action="{% url 'adminEditFaculty' %}">
+    <form id="editProfileForm" class="student-editprofile-form" method="Post">
       {% csrf_token %}
 
       <div class="mb-3 input-group">
         <span class="input-group-text bg-white"><i class="fa fa-user"></i></span>
-        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter full name" required
-          value="{{ faculty.full_name|default_if_none:'' }}" />
+        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter full name" value="{{full_name}}" />
       </div>
 
       <div class="mb-3 input-group">
         <span class="input-group-text bg-white"><i class="fa fa-envelope"></i></span>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required
-          value="{{ faculty.email|default_if_none:'' }}" />
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" value="{{email}}" />
       </div>
 
       <div class="mb-3 input-group">
         <span class="input-group-text bg-white"><i class="fa fa-phone"></i></span>
-        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter phone number" required
-          value="{{ faculty.phone|default_if_none:'' }}" />
+        <input type="tel" class="form-control" id="phone" name="phone" value="{{phone}}"  />
       </div>
 
       <div class="mb-3 input-group">
         <span class="input-group-text bg-white"><i class="fa fa-building"></i></span>
-        <select class="form-select" id="department" name="department" required>
-          <option value="" disabled {% if not faculty.department %}selected{% endif %}>Select department</option>
-          <option value="Computer Science" {% if faculty.department == "Computer Science" %}selected{% endif %}>Computer Science</option>
-          <option value="Electronics" {% if faculty.department == "Electronics" %}selected{% endif %}>Electronics</option>
-          <option value="Mechanical" {% if faculty.department == "Mechanical" %}selected{% endif %}>Mechanical</option>
-          <option value="Civil" {% if faculty.department == "Civil" %}selected{% endif %}>Civil</option>
+        <select class="form-select" name="department" required>
+          <option value="computer science" {% if department == "computer science" %}selected{% endif %}>Computer Science</option>
+          <option value="physics" {% if department == "physics" %}selected{% endif %}>Physics</option>
+          <option value="biology" {% if department == "biology" %}selected{% endif %}>Biology</option>
         </select>
       </div>
 
       <div class="mb-3 input-group">
         <span class="input-group-text bg-white"><i class="fa fa-id-badge"></i></span>
-        <input type="text" class="form-control" id="facultyId" name="facultyId" placeholder="Enter Faculty Id" required
-          value="{{ faculty.faculty_id|default_if_none:'' }}" />
-      </div>
+<input type="text" class="form-control" name="facultyId" value="{{ facultyId }}" readonly />      </div>
 
       <div class="mb-4 input-group">
         <span class="input-group-text bg-white"><i class="fa fa-lock"></i></span>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Enter new password" />
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter new password (optional)"  />
       </div>
 
-      <button type="submit" class="btn w-100 student-editprofile-submit-btn">Save Changes</button>
+      <button type="submit" class="btn  w-100 student-editprofile-submit-btn">Save Changes</button>
     </form>
   </div>
-</main>
+</main> <br> <br>
 {% endblock %}

@@ -10,6 +10,13 @@
 <main class="container flex-grow-1 pt-5 student-editprofile-content" style="margin-top: -20px; max-width: 700px;">
   <div class="card shadow-sm p-4 border-0">
     <h2 class="text-center mb-4 student-editprofile-heading">Add Student</h2>
+    {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+    {% endif %}
 
     <form id="editProfileForm" class="student-editprofile-form" method="post" action="{% url 'facultyAddStudent' %}">
       {% csrf_token %}

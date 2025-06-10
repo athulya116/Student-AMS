@@ -1,100 +1,130 @@
 {% extends "./adminBase.html" %}
 {% load static %}
-
-{% block title %}Student Attendance{% endblock %}
-
-{% block extra_head %}
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-{% endblock %}
+{% block title %}Attendance{% endblock %}
+{% block active_attendance %}active{% endblock %}
 
 {% block content %}
-<main class="attendance-main" style="margin-top: -10px; background-color:#e8eae3;">
-  <h1 class="attendance-title">Student Attendance</h1>
+<main class="attendance-main" style="margin-top: -35px; ">
+    <h1 class="attendance-title">Student Attendance</h1>
 
-  <div class="attendance-month-selector">
-    <label for="attendance-month">Select Month: </label>
-    <select id="attendance-month" class="attendance-dropdown" onchange="updateAttendanceTable()">
-      <option value="january">January</option>
-      <option value="february">February</option>
-      <option value="march">March</option>
-    </select>
+    <div class="attendance-month-selector">
+      <label for="attendance-month">Select Month: </label>
+      <select id="attendance-month" class="attendance-dropdown" onchange="updateAttendanceTable()">
+        {% now "F" as current_month %}
+        <option value="january" {% if current_month == "January" %}selected{% endif %}>January</option>
+        <option value="february" {% if current_month == "February" %}selected{% endif %}>February</option>
+        <option value="march" {% if current_month == "March" %}selected{% endif %}>March</option>
+        <option value="april" {% if current_month == "April" %}selected{% endif %}>April</option>
+        <option value="may" {% if current_month == "May" %}selected{% endif %}>May</option>
+        <option value="june" {% if current_month == "June" %}selected{% endif %}>June</option>
+      </select>
 
-    <label for="attendance-department" class="ms-3">Filter by Department: </label>
-    <select id="attendance-department" class="attendance-dropdown" onchange="updateAttendanceTable()">
-      <option value="all">All</option>
-      <option value="Computer Science">Computer Science</option>
-      <option value="Physics">Physics</option>
-      <option value="Biology">Biology</option>
-    </select>
-  </div>
 
-  <table class="attendance-table" id="attendance-table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Department</th>
-        <th>Days Present</th>
-        <th>Days Absent</th>
-        <th>Total Days</th>
-        <th>Attendance %</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- JS inserts rows -->
-    </tbody>
-  </table>
-</main>
+      <label for="department-filter" style="margin-left: 20px;">Filter by Department: </label>
+      <select id="department-filter" class="attendance-dropdown" onchange="updateAttendanceTable()">
+        <option value="all">All</option>
+        <option value="computer science">Computer Science</option>
+        <option value="biology">Biology</option>
+        <option value="physics">Physics</option>
+      </select>
 
+      <label for="sort-filter" style="margin-left: 20px;">Sort by: </label>
+      <select id="sort-filter" class="attendance-dropdown" onchange="updateAttendanceTable()">
+        <option value="name">Name (A-Z)</option>
+        <option value="admn_no">Admission (Ascending)</option>
+      </select>
+
+    </div>
+
+    <table class="attendance-table" id="attendance-table" style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Admission No</th> 
+          <th>Department</th>
+          <th>Days Present</th>
+          <th>Days Absent</th>
+          <th>Holy Days</th>
+          <th>Total Days</th>
+          <th>Attendance %</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- JS inserts rows -->
+      </tbody>
+    </table>
+  </main>
+
+  <style>
+/* For smaller screens */
+.attendance-table {
+  width: 100%;
+  display: block;
+}
+@media (max-width: 768px) {
+  .attendance-table {
+    overflow-x: auto;
+  }
+  
+  .attendance-month-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .attendance-dropdown {
+    width: 100%;
+    font-size: 14px;
+    padding: 6px;
+  }
+}
+</style>
 <script>
-   const attendanceData = {
-     january: [
-       { name: "Athulya SS", dept: "Computer Science", present: 22, absent: 2, total: 24 },
-       { name: "Riya Thomas", dept: "Physics", present: 20, absent: 4, total: 24 },
-       { name: "Anju Mathew", dept: "Computer Science", present: 23, absent: 1, total: 24 },
-       { name: "Sneha Raj", dept: "Biology", present: 21, absent: 3, total: 24 }
-     ],
-     february: [
-       { name: "Athulya SS", dept: "Computer Science", present: 19, absent: 1, total: 20 },
-       { name: "Riya Thomas", dept: "Physics", present: 18, absent: 2, total: 20 },
-       { name: "Anju Mathew", dept: "Computer Science", present: 20, absent: 0, total: 20 },
-       { name: "Sneha Raj", dept: "Biology", present: 17, absent: 3, total: 20 }
-     ],
-     march: [
-       { name: "Athulya SS", dept: "Computer Science", present: 24, absent: 0, total: 24 },
-       { name: "Riya Thomas", dept: "Physics", present: 22, absent: 2, total: 24 },
-       { name: "Anju Mathew", dept: "Computer Science", present: 21, absent: 3, total: 24 },
-       { name: "Sneha Raj", dept: "Biology", present: 20, absent: 4, total: 24 }
-     ]
-   }
-   function updateAttendanceTable() {
-     const month = document.getElementById("attendance-month").value;
-     const department = document.getElementById("attendance-department").value;
-     const data = attendanceData[month];
-     const tbody = document.querySelector("#attendance-table tbody");
-     tbody.innerHTML = ""
-     const filteredData = department === "all"
-       ? data
-       : data.filter(student => student.dept === department)
-     filteredData.forEach(student => {
-       const row = document.createElement("tr");
-       const percentage = ((student.present / student.total) * 100).toFixed(2);
-       row.innerHTML = `
-         <td>${student.name}</td>
-         <td>${student.dept}</td>
-         <td>${student.present}</td>
-         <td>${student.absent}</td>
-         <td>${student.total}</td>
-         <td>${percentage}%</td>
-         <td>
-           <button class="attendance-edit-btn" onclick="window.location.href='{% url 'adminEditStudentAttendance' %}?name=${encodeURIComponent(student.name)}'">Edit</button>
-         </td>
-       `;
-       tbody.appendChild(row);
-     });
-    }
-   
-   window.onload = updateAttendanceTable
+const attendanceData = JSON.parse(`{{ attendance_json|escapejs }}`);
+  const baseUrl = "{% url 'adminEditStudentAttendance' %}";
 
+  function updateAttendanceTable() {
+    const month = document.getElementById("attendance-month").value;
+    const deptFilter = document.getElementById("department-filter").value.toLowerCase();
+    const sortBy = document.getElementById("sort-filter").value;
+    const data = attendanceData[month] || [];
+    const tbody = document.querySelector("#attendance-table tbody");
+    tbody.innerHTML = "";
+
+    const filteredData = deptFilter === "all"
+    ? data
+    : data.filter(student => student.dept.toLowerCase() === deptFilter);
+
+    if (sortBy === "name") {
+    filteredData.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === "admn_no") {
+    filteredData.sort((a, b) => Number(a.admn_no) - Number(b.admn_no));
+    }
+
+    filteredData.forEach(student => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${student.name}</td>
+        <td>${student.admn_no}</td>
+        <td>${student.dept}</td>
+        <td>${student.present}</td>
+        <td>${student.absent}</td>
+        <td>${student.holyday}</td>
+        <td>${student.total}</td>
+        <td>${student.percentage}%</td>
+        <td>
+         <button class="attendance-edit-btn" onclick="window.location.href='${baseUrl}?admn_no=${encodeURIComponent(student.admn_no)}'">Edit</button>        </td>
+      `;
+      tbody.appendChild(row);
+    });
+    console.log("Filtered Department:", deptFilter);
+    console.log("attendanceData:", attendanceData);
+    console.log("selected month:", month);
+    console.log("Sort By:", sortBy);
+
+  }
+
+  window.onload = updateAttendanceTable;
 </script>
 {% endblock %}

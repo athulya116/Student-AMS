@@ -7,13 +7,22 @@
 <main class="flex-grow-1 d-flex align-items-center justify-content-center student-main-content" style="margin-top:-50px;">
   <div class="student-attendance-form text-center p-4 shadow-sm rounded">
     <h2 class="mb-4">Mark Today's Attendance</h2>
+    {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+    {% endif %}
 
     <form method="post" action="{% url 'markAttendance' %}">
       {% csrf_token %}
       <div class="mb-3 text-start">
+        <p>Admission No: {{ request.user.studentprofile.admn_no }}</p>
+
         <label for="attendanceDate" class="form-label">Date</label>
         <input type="date" class="form-control" id="attendanceDate" name="date"
-               value="{{ today_date }}">
+          value="{{ today_date }}" readonly />
       </div>
 
       <div class="mb-4 text-start">

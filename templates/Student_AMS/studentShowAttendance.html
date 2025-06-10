@@ -9,14 +9,16 @@
 {% block attendance_active %}active{% endblock %}
 
 {% block content %}
-  <h2 class="text-center  mb-5 student-attendance-heading" style="margin-top:-40px;">Attendance Details</h2>
+  <h2 class="text-center mb-5 student-attendance-heading" style="margin-top:-40px;">Attendance Details</h2>
 
   <div class="mb-4 text-center" style="margin-top: -40px;">
     <label for="monthSelector" class="form-label fw-semibold">Select Month:</label>
     <select id="monthSelector" class="form-select w-auto d-inline-block student-attendance-dropdown">
-      <option value="march">March</option>
-      <option value="april">April</option>
-      <option value="may" selected>May</option>
+      {% for month in available_months %}
+        <option value="{{ month }}" {% if forloop.last %}selected{% endif %}>
+          {{ month|capfirst }}
+        </option>
+      {% endfor %}
     </select>
   </div>
 
@@ -27,150 +29,60 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    const data = {
-      march: [
-        { date: '2025-03-01', status: 'Holiday' },
-        { date: '2025-03-02', status: 'Holiday' },
-        { date: '2025-03-03', status: 'Present' },
-        { date: '2025-03-04', status: 'Absent' },
-        { date: '2025-03-01', status: 'Holiday' },
-        { date: '2025-03-02', status: 'Holiday' },
-        { date: '2025-03-03', status: 'Present' },
-        { date: '2025-03-04', status: 'Absent' },
-        { date: '2025-03-01', status: 'Holiday' },
-        { date: '2025-03-02', status: 'Holiday' },
-        { date: '2025-03-03', status: 'Present' },
-        { date: '2025-03-04', status: 'Absent' },
-        { date: '2025-03-01', status: 'Holiday' },
-        { date: '2025-03-02', status: 'Holiday' },
-        { date: '2025-03-03', status: 'Present' },
-        { date: '2025-03-04', status: 'Absent' },
-        { date: '2025-03-01', status: 'Holiday' },
-        { date: '2025-03-02', status: 'Holiday' },
-        { date: '2025-03-03', status: 'Present' },
-        { date: '2025-03-04', status: 'Absent' },
-        { date: '2025-03-01', status: 'Holiday' },
-        { date: '2025-03-02', status: 'Holiday' },
-        { date: '2025-03-03', status: 'Present' },
-        { date: '2025-03-04', status: 'Absent' },
-        { date: '2025-03-01', status: 'Holiday' },
-        { date: '2025-03-02', status: 'Holiday' },
-        { date: '2025-03-03', status: 'Present' },
-        { date: '2025-03-04', status: 'Absent' },
-        { date: '2025-03-01', status: 'Holiday' },
-        { date: '2025-03-02', status: 'Holiday' },
-        { date: '2025-03-04', status: 'Absent' }
-      ],
-      april: [
-        { date: '2025-04-06', status: 'Holiday' },
-        { date: '2025-04-07', status: 'Present' },
-        { date: '2025-04-08', status: 'Absent' },
-        { date: '2025-04-13', status: 'Holiday' },
-        { date: '2025-04-06', status: 'Holiday' },
-        { date: '2025-04-07', status: 'Present' },
-        { date: '2025-04-08', status: 'Absent' },
-        { date: '2025-04-13', status: 'Holiday' },
-        { date: '2025-04-06', status: 'Holiday' },
-        { date: '2025-04-07', status: 'Present' },
-        { date: '2025-04-08', status: 'Absent' },
-        { date: '2025-04-13', status: 'Holiday' },
-        { date: '2025-04-06', status: 'Holiday' },
-        { date: '2025-04-07', status: 'Present' },
-        { date: '2025-04-08', status: 'Absent' },
-        { date: '2025-04-13', status: 'Holiday' },
-        { date: '2025-04-06', status: 'Holiday' },
-        { date: '2025-04-07', status: 'Present' },
-        { date: '2025-04-08', status: 'Absent' },
-        { date: '2025-04-13', status: 'Holiday' },
-        { date: '2025-04-06', status: 'Holiday' },
-        { date: '2025-04-07', status: 'Present' },
-        { date: '2025-04-08', status: 'Absent' },
-        { date: '2025-04-13', status: 'Holiday' },
-        { date: '2025-04-06', status: 'Holiday' },
-        { date: '2025-04-07', status: 'Present' },
-        { date: '2025-04-08', status: 'Absent' },
-        { date: '2025-04-13', status: 'Holiday' },
-        { date: '2025-04-06', status: 'Holiday' },
-        { date: '2025-04-07', status: 'Present' },
-        { date: '2025-04-08', status: 'Absent' },
-        { date: '2025-04-13', status: 'Holiday' },
-        { date: '2025-04-06', status: 'Holiday' },
-        { date: '2025-04-07', status: 'Present' },
-        { date: '2025-04-08', status: 'Absent' },
-        { date: '2025-04-13', status: 'Holiday' },
-        { date: '2025-04-06', status: 'Holiday' },
-        { date: '2025-04-07', status: 'Present' },
-        { date: '2025-04-08', status: 'Absent' },
-        { date: '2025-04-13', status: 'Holiday' }
-      ],
-      may: [
-        { date: '2025-05-17', status: 'Holiday' },
-        { date: '2025-05-18', status: 'Holiday' },
-        { date: '2025-05-19', status: 'Present' },
-        { date: '2025-05-20', status: 'Absent' },
-         { date: '2025-05-17', status: 'Holiday' },
-        { date: '2025-05-18', status: 'Holiday' },
-        { date: '2025-05-19', status: 'Present' },
-        { date: '2025-05-20', status: 'Absent' },
-         { date: '2025-05-17', status: 'Holiday' },
-        { date: '2025-05-18', status: 'Holiday' },
-        { date: '2025-05-19', status: 'Present' },
-        { date: '2025-05-20', status: 'Absent' },
-         { date: '2025-05-17', status: 'Holiday' },
-        { date: '2025-05-18', status: 'Holiday' },
-        { date: '2025-05-19', status: 'Present' },
-        { date: '2025-05-20', status: 'Absent' },
-         { date: '2025-05-17', status: 'Holiday' },
-        { date: '2025-05-18', status: 'Holiday' },
-        { date: '2025-05-19', status: 'Present' },
-        { date: '2025-05-20', status: 'Absent' },
-         { date: '2025-05-17', status: 'Holiday' },
-        { date: '2025-05-18', status: 'Holiday' },
-        { date: '2025-05-19', status: 'Present' },
-        { date: '2025-05-20', status: 'Absent' }
-      ]
-    };
+  const data = JSON.parse('{{ attendance_json|escapejs }}');
 
-    const monthSelector = document.getElementById('monthSelector');
-    const tableContainer = document.getElementById('attendanceTableContainer');
+  const monthSelector = document.getElementById('monthSelector');
+  const tableContainer = document.getElementById('attendanceTableContainer');
 
-    function renderTable(month) {
-      const records = data[month] || [];
-      let tableHTML = `
-        <table class="table table-bordered text-center student-attendance-table">
-          <thead class="student-attendance-header">
-            <tr>
-              <th  style="background-color: #fa2742;">Date</th>
-              <th  style="background-color: #fa2742;">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-      `;
+  // Function to get weekday name from date string (YYYY-MM-DD)
+  function getWeekday(dateString) {
+    const dateObj = new Date(dateString);
+    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return weekdays[dateObj.getDay()];
+  }
 
-      records.forEach(record => {
-        let statusClass = '';
-        if (record.status === 'Present') statusClass = 'text-success';
-        else if (record.status === 'Absent') statusClass = 'text-danger';
-        else if (record.status === 'Holiday') statusClass = 'student-attendance-holiday';
-
-        tableHTML += `
+  function renderTable(month) {
+    const records = data[month] || [];
+    let tableHTML = `
+      <table class="table table-bordered text-center student-attendance-table">
+        <thead class="student-attendance-header">
           <tr>
-            <td>${record.date}</td>
-            <td class="${statusClass}">${record.status}</td>
+            <th style="background-color: #fa2742;">Date</th>
+            <th style="background-color: #fa2742;">Weekday</th>
+            <th style="background-color: #fa2742;">Status</th>
           </tr>
-        `;
-      });
+        </thead>
+        <tbody>
+    `;
 
-      tableHTML += '</tbody></table>';
-      tableContainer.innerHTML = tableHTML;
-    }
+    records.forEach(record => {
+      let statusClass = '';
+      if (record.status === 'Present') statusClass = 'text-success';
+      else if (record.status === 'Absent') statusClass = 'text-danger';
+      else if (record.status === 'Holiday') statusClass = 'student-attendance-holiday';
 
-    renderTable(monthSelector.value);
+      const weekday = getWeekday(record.date);
 
-    monthSelector.addEventListener('change', () => {
-      renderTable(monthSelector.value);
+      tableHTML += `
+        <tr>
+          <td>${record.date}</td>
+          <td>${weekday}</td>
+          <td class="${statusClass}">${record.status}</td>
+        </tr>
+      `;
     });
-  </script>
+
+    tableHTML += '</tbody></table>';
+    tableContainer.innerHTML = tableHTML;
+  }
+
+  // Render table for initially selected month
+  renderTable(monthSelector.value);
+
+  // Change table on dropdown change
+  monthSelector.addEventListener('change', () => {
+    renderTable(monthSelector.value);
+  });
+</script>
+
 {% endblock %}
-
-

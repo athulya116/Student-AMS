@@ -8,6 +8,13 @@
 <main class="container flex-grow-1 pt-5 student-editprofile-content" style="margin-top:-30px; max-width: 700px;">
   <div class="card shadow-sm p-4 border-0">
     <h2 class="text-center mb-4 student-editprofile-heading">Edit Faculty Profile</h2>
+    {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+    {% endif %}
 
     <form id="editProfileForm" class="student-editprofile-form" method="Post">
       {% csrf_token %}
@@ -38,7 +45,8 @@
 
       <div class="mb-3 input-group">
         <span class="input-group-text bg-white"><i class="fa fa-id-badge"></i></span>
-<input type="text" class="form-control" name="facultyId" value="{{ facultyId }}" readonly />      </div>
+        <input type="text" class="form-control" name="facultyId" value="{{ facultyId }}" readonly />     
+      </div>
 
       <div class="mb-4 input-group">
         <span class="input-group-text bg-white"><i class="fa fa-lock"></i></span>

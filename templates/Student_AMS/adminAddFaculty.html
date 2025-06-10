@@ -10,7 +10,18 @@
 <main class="container flex-grow-1 pt-5 student-editprofile-content" style="margin-top: -20px; max-width: 700px;">
   <div class="card shadow-sm p-4 border-0">
     <h2 class="text-center mb-4 student-editprofile-heading">Add Faculty</h2>
-
+    {% if faculty_id_exists %}
+      <div class="alert alert-danger">
+        Faculty ID or Email already exists. Please choose a different one.
+      </div>
+    {% endif %}
+    {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+    {% endif %}
     <form id="editProfileForm" class="student-editprofile-form" method="post" action="{% url 'adminAddFaculty' %}">
       {% csrf_token %}
 
@@ -54,4 +65,70 @@
     </form>
   </div>
 </main>
+<script>
+document.getElementById('editProfileForm').addEventListener('submit', function(e) {
+    // Prevent form submission initially
+    e.preventDefault();
+
+    let isValid = true;
+    const errors = {};
+
+    const fullName = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const department = document.getElementById('department').value;
+    const facultyId = document.getElementById('faculty_id').value.trim();
+    const password = document.getElementById('password').value;
+
+    // Clear previous error messages
+    document.querySelectorAll('.text-danger').forEach(el => el.remove());
+
+    // Validation rules
+    if (fullName.length < 3) {
+        showError('fullName', 'Full name must be at least 3 characters.');
+        isValid = false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showError('email', 'Invalid email format.');
+        isValid = false;
+    }
+
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(phone)) {
+        showError('phone', 'Enter a valid 10-digit phone number.');
+        isValid = false;
+    }
+
+    if (!department) {
+        showError('department', 'Please select a department.');
+        isValid = false;
+    }
+
+    if (facultyId === "") {
+        showError('faculty_id', 'Faculty ID is required.');
+        isValid = false;
+    }
+
+    if (password.length < 6) {
+        showError('password', 'Password must be at least 6 characters.');
+        isValid = false;
+    }
+
+    // If all validations pass, submit the form
+    if (isValid) {
+        this.submit(); // normal submit
+    }
+
+    function showError(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        const error = document.createElement('small');
+        error.classList.add('text-danger');
+        error.innerText = message;
+        field.parentElement.appendChild(error);
+    }
+});
+</script>
+
 {% endblock %}

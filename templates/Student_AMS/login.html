@@ -42,39 +42,35 @@
       </form> -->
 
       <form method="POST" action="{% url 'login' %}"  id="login-form">
-  {% csrf_token %}
-  {% if messages %}
-    {% for message in messages %}
-      <p class="text-danger text-center">{{ message }}</p>
-    {% endfor %}
-  {% endif %}
+        {% csrf_token %}
+        {% if messages %}
+          {% for message in messages %}
+            <p class="text-danger text-center">{{ message }}</p>
+          {% endfor %}
+        {% endif %}
 
-  <div class="mb-3">
-    <label for="userType" class="form-label fw-semibold">Select Role</label>
-    <select id="userType" name="role" class="form-select" required>
-      <option disabled selected>Select user type</option>
-      <option value="student">Student</option>
-      <option value="faculty">Faculty</option>
-      <option value="admin">Admin</option>
-    </select>
-  </div>
-
-  <div class="mb-3">
-    <label for="username" class="form-label">Username</label>
-    <input type="text" name="username" class="form-control" id="username" placeholder="Enter username" required>
-  </div>
-
-  <div class="mb-3">
-    <label for="password" class="form-label">Password</label>
-    <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" required>
-  </div>
-
-  <button type="submit" class="btn btn-custom w-100">Login</button>
-</form>
-
-
+        <div class="mb-3">
+          <label for="userType" class="form-label fw-semibold">Select Role</label>
+          <select id="userType" name="role" class="form-select" required>
+            <option disabled selected>Select user type</option>
+            <option value="student">Student</option>
+            <option value="faculty">Faculty</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
       
-
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" name="username" class="form-control" id="username" placeholder="Enter username" required>
+        </div>
+      
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" required>
+        </div>
+      
+        <button type="submit" class="btn btn-custom w-100">Login</button>
+      </form>
 
       <div class="mb-3 text-center">
         <a href="{% url 'forgotPassword' %}" class="text-decoration-none text-accent" style="font-size: 0.9rem;">Forgot password?</a>
@@ -83,7 +79,6 @@
         <small class=" text-accent">Only registered users can log in. Please contact Admin or faculty for access.</small>
       </div>
     </div>
-
   </div>
 </main>
 <br>

@@ -10,4 +10,5 @@ urlpatterns = [
     path('facultyStudentProfileDelete/<str:admn_no>/',views.facultyDeleteStudent, name='facultyDeleteStudent'),
     path('facultyEditStudentAttendance/',views.facultyEditStudentAttendance, name='facultyEditStudentAttendance'),
     path('facultyAddStudent/', views.facultyAddStudent, name='facultyAddStudent'),
+    # path("get-student-attendance/", views.get_student_attendance, name="get_student_attendance"),
 ]
